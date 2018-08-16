@@ -12,6 +12,7 @@ import statement from '@/components/data/statement'
 import firstBarList from '@/components/firstBar/firstBarList'
 import busiHallFront from '@/components/busiHallFront/busiHall'
 import orderListFront from '@/components/orderListFront/orderList'
+import userManage from '@/components/userManage/userManage'
 
 Vue.use(Router)
 
@@ -32,11 +33,11 @@ export default new Router({
             name: 'home',
             component: home,
             children: [
-                // page1
+                // 用户管理
                 {
-                    path: '/busiList',
-                    component: busiList,
-                    name: 'busiList'
+                    path: '/userManage',
+                    component: userManage,
+                    name: 'userManage'
                 },
                 // page2
                 {

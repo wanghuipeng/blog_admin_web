@@ -1,5 +1,5 @@
 <template>
-  <el-header>blog
+  <el-header>blog后台管理系统
       <ul class="right-bar">
         <!-- <li>
           <el-tooltip class="item" effect="dark" content="个人资料" placement="bottom">
@@ -42,7 +42,9 @@ export default {
     }
   },
   created () {
-    this.userName = JSON.parse(sessionStorage.getItem('user')).name
+    this.userName = sessionStorage.getItem('userName')
+    console.log(1111111111, this.userName)
+    // this.userName = JSON.parse(sessionStorage.getItem('user')).name
   },
   methods: {
     // 退出

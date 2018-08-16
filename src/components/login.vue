@@ -22,7 +22,6 @@
 import { login } from '@/assets/js/api.js'
 
 export default {
-  name: 'login',
   data () {
     return {
       ruleForm: {
@@ -42,6 +41,11 @@ export default {
         let data = res.data
         if (data.status === 1) {
           this.$notify({title: '登录成功', type: 'success', duration: 1000})
+          let menuAll = ['userManage', 'orderList', 'costList', 'allotLog', 'statement', 'firstBarList', 'busiHallFront', 'orderListFront']
+          sessionStorage.setItem('menu', JSON.stringify(menuAll))
+          sessionStorage.setItem('token', data.token)
+          sessionStorage.setItem('userName', this.ruleForm.username)
+          this.$router.push({name: menuAll[0]})
         } else {
           this.$notify({title: data.msg, type: 'error', duration: 1000})
         }

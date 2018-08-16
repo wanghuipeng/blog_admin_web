@@ -57,8 +57,8 @@ export default {
         text: index
       }
       switch (item) {
-        case 'busiList':
-          obj.text = 'menu1'
+        case 'userManage':
+          obj.text = '用户管理'
           obj.icon = 'el-icon-news'
           break
         case 'orderList':
