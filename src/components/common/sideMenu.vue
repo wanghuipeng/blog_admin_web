@@ -61,8 +61,8 @@ export default {
           obj.text = '用户管理'
           obj.icon = 'el-icon-news'
           break
-        case 'orderList':
-          obj.text = 'menu2'
+        case 'blogManage':
+          obj.text = '博客管理'
           obj.icon = 'el-icon-document'
           break
         case 'costList':

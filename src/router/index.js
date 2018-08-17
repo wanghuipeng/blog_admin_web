@@ -13,6 +13,7 @@ import firstBarList from '@/components/firstBar/firstBarList'
 import busiHallFront from '@/components/busiHallFront/busiHall'
 import orderListFront from '@/components/orderListFront/orderList'
 import userManage from '@/components/userManage/userManage'
+import blogManage from '@/components/blogManage/list'
 
 Vue.use(Router)
 
@@ -39,11 +40,11 @@ export default new Router({
                     component: userManage,
                     name: 'userManage'
                 },
-                // page2
+                // 博客管理
                 {
-                    path: '/orderList',
-                    component: orderList,
-                    name: 'orderList'
+                    path: '/blogManage',
+                    component: blogManage,
+                    name: 'blogManage'
                 },
                 // page3
                 {
