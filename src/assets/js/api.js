@@ -1,6 +1,7 @@
 // 设置axios,process.env值是根据用户是测试还是生产来读取config中的dev.env和pro.env中的配置
 import axios from 'axios'
 import { Message } from "element-ui";
+import { resolve } from 'url';
 axios.defaults.baseURL = process.env.API_ROOT
     //axios.defaults.baseURL = "http://192.168.1.128:1030/fjs/";
 axios.defaults.headers.common['Authorization'] = process.env.API_TOKEN
@@ -119,4 +120,9 @@ export const login = params => {
 // 用户管理---修改密码
 export const updatePassword = params => {
     return getAxios('get', '/updatePassword', params).then(res => res)
+}
+
+// 用户详情
+export const userInfo = params => {
+    return getAxios('get', '/userInfo', params).then(res => res.data)
 }

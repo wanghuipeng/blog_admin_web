@@ -1,17 +1,7 @@
 <template>
   <el-header>blog后台管理系统
       <ul class="right-bar">
-        <!-- <li>
-          <el-tooltip class="item" effect="dark" content="个人资料" placement="bottom">
-            <i class="fa fa-user-circle"></i>
-          </el-tooltip>
-        </li>
-        <li>
-          <el-tooltip class="item" effect="dark" content="修改密码" placement="bottom">
-            <i class="fa fa-lock" style="font-size: 18px;"></i>
-          </el-tooltip>
-        </li> -->
-        <li class="userName">欢迎您，{{userName}}</li>
+        <li class="userName"><img class="avatar" :src="avatar" /></li>
         <li>
           <el-tooltip class="item" effect="dark" content="退出登录" placement="bottom">
             <i class="fa fa-power-off"  @click="quit"></i>
@@ -34,19 +24,32 @@
 </template>
 
 <script>
+import { userInfo } from '@/assets/js/api.js'
+
 export default {
   data () {
     return {
       quitDialogVisible: false,
-      userName: ''
+      avatar: ''
     }
   },
   created () {
-    this.userName = sessionStorage.getItem('userName')
-    console.log(1111111111, this.userName)
-    // this.userName = JSON.parse(sessionStorage.getItem('user')).name
+    this.userInfo()
   },
   methods: {
+    // 用户详情
+    userInfo () {
+      userInfo().then(res => {
+        let data = res.data
+        if (res.status === 1) {
+          this.avatar = data.avatar
+        } else {
+          this.$notify({title: res.msg, type: 'error', duration: 1000})
+        }
+      }).catch(res => {
+        this.$notify({title: '服务器异常', type: 'error', duration: 1000})
+      })
+    },
     // 退出
     quit () {
       this.quitDialogVisible = true
@@ -71,5 +74,12 @@ export default {
 <style scoped lang='less'>
 .userName{
   font-size: 14px;
+}
+.avatar{
+  width: 40px;
+  height: 40px;
+  border-radius:40px;
+  display: inline-block;
+  vertical-align: -14px;
 }
 </style>

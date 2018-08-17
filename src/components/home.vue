@@ -126,8 +126,8 @@ export default {
     font-size: 18px;
     background-color: #262c46;
     color: #fff;
-    line-height: 40px;
-    height: 40px !important;
+    line-height: 60px;
+    height: 60px !important;
     padding: 0 15px;
   }
 
