@@ -4,9 +4,6 @@ import home from '@/components/home'
 import login from '@/components/login'
 import register from '@/components/register'
 import notFound from '@/components/notFound'
-import busiList from '@/components/business/busiList'
-import orderList from '@/components/order/orderList'
-import costList from '@/components/cost/costList'
 import allotLog from '@/components/data/allotLog'
 import statement from '@/components/data/statement'
 import firstBarList from '@/components/firstBar/firstBarList'
@@ -14,6 +11,8 @@ import busiHallFront from '@/components/busiHallFront/busiHall'
 import orderListFront from '@/components/orderListFront/orderList'
 import userManage from '@/components/userManage/userManage'
 import blogManage from '@/components/blogManage/list'
+import addBlog from '@/components/blogManage/addBlog'
+import editBlog from '@/components/blogManage/editBlog'
 
 Vue.use(Router)
 
@@ -46,11 +45,17 @@ export default new Router({
                     component: blogManage,
                     name: 'blogManage'
                 },
-                // page3
+                // 添加博客
                 {
-                    path: '/costList',
-                    component: costList,
-                    name: 'costList'
+                    path: '/blogManage/addBlog',
+                    component: addBlog,
+                    name: addBlog
+                },
+                // 编辑博客
+                {
+                    path: '/blogManage/editBlog',
+                    component: editBlog,
+                    name: editBlog
                 },
                 // page4
                 {

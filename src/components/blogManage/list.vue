@@ -2,6 +2,7 @@
     <div class="main orderManage">
         <blog-header />
         <blog-table />
+        <router-view></router-view>
      </div>
 </template>
 
@@ -14,13 +15,6 @@ export default {
   data () {
     return {
     }
-  },
-  created () {
-    // 添加title
-    this.addTab('订单列表')
-  },
-  methods: {
-
   }
 }
 </script>

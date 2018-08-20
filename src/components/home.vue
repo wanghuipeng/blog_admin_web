@@ -42,23 +42,20 @@ export default {
         case '/orderList':
           sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 1}))
           break
-        case '/costList':
+        case '/allotLog':
           sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 2}))
           break
-        case '/allotLog':
+        case '/statement':
           sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 3}))
           break
-        case '/statement':
+        case '/firstBarList':
           sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 4}))
           break
-        case '/firstBarList':
+        case '/busiHallFront':
           sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 5}))
           break
-        case '/busiHallFront':
-          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 0}))
-          break
         case '/orderListFront':
-          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 1}))
+          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 6}))
           break
         default:
           return false

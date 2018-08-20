@@ -126,3 +126,23 @@ export const updatePassword = params => {
 export const userInfo = params => {
     return getAxios('get', '/userInfo', params).then(res => res.data)
 }
+
+// 添加博客
+export const addArticle = params => {
+    return getAxios('post', '/addArticle', params).then(res => res.data)
+}
+
+// 编辑博客
+export const editArticle = params => {
+    return getAxios('post', '/editArticle', params).then(res => res.data)
+}
+
+// 博客列表
+export const searchAll = params => {
+    return getAxios('get', '/searchAll', params).then(res => res.data)
+}
+
+// 博客详情
+export const detailArticle = params => {
+    return getAxios('get', '/detailArticle', params).then(res => res.data)
+}

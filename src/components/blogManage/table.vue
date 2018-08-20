@@ -1,56 +1,45 @@
 <template>
-    <div class="table pt-0 order-table">
-      <!-- 功能 -->
-      <el-form :inline="true" class="demo-form-inline mt-15 clearfix bd-0" size="mini">
-        <el-form-item class="right  mr-0">
-          <el-button type="primary" size="mini" @click="exportExcel">导出excel</el-button>
-        </el-form-item>
-      </el-form>
+    <div class="table pt-0 mt-15 order-table">
       <!-- 表格 -->
       <el-table
         :data="tableData"
         border
+        v-loading="loading"
         style="width: 100%;">
         <el-table-column
-          prop="id"
+          type="index"
           label="ID"
-          width="180">
+          width="50">
         </el-table-column>
         <el-table-column
-          prop="media"
-          label="媒体名称"
+          prop="type"
+          label="博客类型"
           width="180">
           <template slot-scope="scope">
-            {{scope.row.media}}<el-tag type="danger">复购</el-tag>
+            <span v-for="(item,index) in types" :key="index" v-if="scope.row.type === item.value">{{item.label}}</span>
           </template>
         </el-table-column>
         <el-table-column
-          prop="city"
-          label="城市">
+          prop="title"
+          label="博客标题">
         </el-table-column>
         <el-table-column
-          prop="firstBar"
-          label="一级巴">
+          prop="createTime"
+          label="创建时间">
         </el-table-column>
         <el-table-column
-          prop="orderNum"
-          label="订购数量">
+          prop="updateTime"
+          label="更新时间">
         </el-table-column>
         <el-table-column
-          prop="checkMethod"
-          label="核算方法">
+          prop="author"
+          label="作者">
         </el-table-column>
         <el-table-column
-          prop="costPercence"
-          label="订购单价/佣金比例/放款比例">
-        </el-table-column>
-        <el-table-column
-          prop="orderTotalPrice"
-          label="订购总价">
-        </el-table-column>
-        <el-table-column
-          prop="orderTime"
-          label="订购时间">
+          label="操作">
+          <template slot-scope="scope">
+            <el-button type="text" @click="editBlog(scope.row.id)" size="mini">编辑</el-button>
+          </template>
         </el-table-column>
       </el-table>
       <!-- 分页 -->
@@ -59,57 +48,82 @@
         background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :current-page="page"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="pageNum"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
 </template>
 
 <script>
+import { searchAll } from '@/assets/js/api.js'
+
 export default {
   data () {
     return {
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4,
-      tableData: [{
-        id: '01',
-        media: '今日头条',
-        city: '上海',
-        firstBar: '浦东巴',
-        orderNum: '400',
-        checkMethod: '按单价',
-        costPercence: '200',
-        orderTotalPrice: '80000',
-        orderTime: '2017-10-27 13:50:45'
-      }]
+      loading: true,
+      pageNum: 10,
+      page: 1,
+      total: 0,
+      tableData: [],
+      types: [
+        {
+          label: '技术',
+          value: 'type_1'
+        },
+        {
+          label: '生活',
+          value: 'type_2'
+        },
+        {
+          label: '感想',
+          value: 'type_3'
+        },
+        {
+          label: '备忘',
+          value: 'type_4'
+        }
+      ]
     }
   },
+  created () {
+    this.searchAll()
+  },
   methods: {
-    // 导出excel表格
-    exportExcel () {
-      require.ensure([], () => {
-        const { export_json_to_excel: exportJsonToExcel } = require('../../assets/js/excel/Export2Excel')
-        const tHeader = ['ID', '媒体名称', '城市', '一级巴', '订购数量', '核算方法', '订购单价/佣金比例/放款比例', '订购总价', '订购时间']
-        const filterVal = ['id', 'media', 'city', 'firstBar', 'orderNum', 'checkMethod', 'costPercence', 'orderTotalPrice', 'orderTime']
-        const list = this.tableData
-        const data = this.formatJson(filterVal, list)
-        exportJsonToExcel(tHeader, data, '订单列表excel')
+    // 列表数据
+    searchAll () {
+      let { pageNum, page } = this
+      let params = {
+        pageNum,
+        page
+      }
+      searchAll(params).then(res => {
+        let data = res.data
+        if (res.status === 1) {
+          this.loading = false
+          this.tableData = data.list
+          this.total = data.count
+        } else {
+          this.$notify({title: res.msg, type: 'error', duration: 1000})
+        }
+      }).catch(res => {
+        this.$notify({title: '服务器异常', type: 'error', duration: 1000})
       })
     },
-    // 格式化excel表格
-    formatJson (filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]))
+    editBlog (id) {
+      this.$router.push({path: '/blogManage/editBlog', query: {blogId: id}})
     },
     handleSizeChange (val) {
-      console.log(`每页 ${val} 条`)
+      this.pageNum = val
+      this.loading = true
+      this.searchAll()
     },
     handleCurrentChange (val) {
-      console.log(`当前页: ${val}`)
+      this.page = val
+      this.loading = true
+      this.searchAll()
     }
   }
 }

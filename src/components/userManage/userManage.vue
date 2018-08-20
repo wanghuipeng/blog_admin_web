@@ -1,5 +1,5 @@
 <template>
-<div class="main userManage">
+<div class="main userManage w-auto">
     <el-form ref="ruleForm" :model="ruleForm" label-width="80px" size="mini">
         <el-form-item label="用户名"  prop="user">
             <el-input v-model="ruleForm.user" disabled></el-input>
