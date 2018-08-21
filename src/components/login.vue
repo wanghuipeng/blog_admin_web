@@ -9,7 +9,7 @@
         <el-input type="password" v-model="ruleForm.password" @keyup.native.enter="submitForm('ruleForm')"></el-input>
       </el-form-item>
       <el-form-item>
-         <a @click="register">注册</a>
+         <a @click="register" href="javascript:void(0)">注册</a>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click.enter="submitForm('ruleForm')" class="loginBtn">登录</el-button>

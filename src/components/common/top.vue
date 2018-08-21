@@ -42,8 +42,9 @@ export default {
       userInfo().then(res => {
         let data = res.data
         if (res.status === 1) {
-          this.avatar = data.avatar
           sessionStorage.setItem('user', data.user)
+          sessionStorage.setItem('avatar', data.avatar)
+          this.avatar = data.avatar
         } else {
           this.$notify({title: res.msg, type: 'error', duration: 1000})
         }

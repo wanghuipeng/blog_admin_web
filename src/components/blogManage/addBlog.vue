@@ -26,6 +26,7 @@ export default {
   data () {
     return {
       author: '',
+      avatar: '',
       types: [
         {
           label: '技术',
@@ -53,16 +54,19 @@ export default {
   },
   created () {
     let user = sessionStorage.getItem('user')
+    let avatar = sessionStorage.getItem('avatar')
     this.author = user
+    this.avatar = avatar
   },
   methods: {
     saveBlog () {
-      let { author } = this
+      let { author, avatar } = this
       let { type, title, content } = this.form
       let params = {
         type,
         title,
         author,
+        avatar,
         content
       }
       addArticle(params).then(res => {
