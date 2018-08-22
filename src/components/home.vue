@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" id="home">
     <el-container class="is-vertical">
       <top />
       <el-container id="content">
@@ -117,6 +117,7 @@ export default {
   }
   .el-container{
     height: 100%;
+    overflow: auto;
   }
   .el-header {
     text-align: left;
@@ -133,6 +134,9 @@ export default {
     color: #fff;
     text-align: center;
     line-height: 200px;
+    position: absolute;
+    z-index: 100;
+    height: 100%;
   }
 
   .el-main {

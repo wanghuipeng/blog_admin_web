@@ -24,12 +24,23 @@
           label="博客标题">
         </el-table-column>
         <el-table-column
+          prop="thumbnail"
+          label="缩略图">
+          <template slot-scope="scope">
+            <img class="thumbnail" :src="scope.row.thumbnail" @click="preview(scope.row.thumbnail)" />
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="createTime"
           label="创建时间">
         </el-table-column>
         <el-table-column
           prop="updateTime"
           label="更新时间">
+        </el-table-column>
+        <el-table-column
+          prop="pv"
+          label="PV">
         </el-table-column>
         <el-table-column
           prop="author"
@@ -43,7 +54,6 @@
         </el-table-column>
       </el-table>
       <!-- 分页 -->
-
       <el-pagination
         background
         @size-change="handleSizeChange"
@@ -54,6 +64,12 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
+      <!-- 图片预览 -->
+      <el-dialog
+        :visible.sync="dialogVisible"
+        width="50%">
+        <img width="100%" :src="previewUrl">
+      </el-dialog>
     </div>
 </template>
 
@@ -63,6 +79,8 @@ import { searchAll } from '@/assets/js/api.js'
 export default {
   data () {
     return {
+      previewUrl: '',
+      dialogVisible: false,
       loading: true,
       pageNum: 10,
       page: 1,
@@ -92,6 +110,11 @@ export default {
     this.searchAll()
   },
   methods: {
+    // 图片预览
+    preview (url) {
+      this.previewUrl = url
+      this.dialogVisible = true
+    },
     // 列表数据
     searchAll () {
       let { pageNum, page } = this
@@ -131,6 +154,12 @@ export default {
 
 <style scoped lang='less'>
 .order-table{
+  .thumbnail{
+    width: auto;
+    height: 60px;
+    vertical-align: middle;
+    padding: 5px 0;
+  }
   .el-table_1_column_2 {
     position: relative;
   }

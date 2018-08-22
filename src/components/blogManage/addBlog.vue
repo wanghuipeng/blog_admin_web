@@ -9,6 +9,18 @@
         <el-form-item label="标题" prop="title">
             <el-input v-model="form.title" class="w-193"></el-input>
         </el-form-item>
+        <el-form-item label="缩略图">
+            <el-upload
+            class="avatar-uploader"
+            :action="uploadUrl"
+            name="avatar"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+        </el-form-item>
         <el-form-item label="内容" prop="content">
             <el-input type="textarea" v-model="form.content" :rows="8" class="w-500"></el-input>
         </el-form-item>
@@ -25,6 +37,8 @@ import { addArticle } from '@/assets/js/api.js'
 export default {
   data () {
     return {
+      uploadUrl: process.env.API_ROOT + 'upload',
+      imageUrl: '',
       author: '',
       avatar: '',
       types: [
@@ -59,14 +73,22 @@ export default {
     this.avatar = avatar
   },
   methods: {
+    // 上传成功
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = res.data.filePath
+    },
+    // 上传之前
+    beforeAvatarUpload (file) {
+    },
     saveBlog () {
-      let { author, avatar } = this
+      let { author, avatar, imageUrl: thumbnail } = this
       let { type, title, content } = this.form
       let params = {
         type,
         title,
         author,
         avatar,
+        thumbnail,
         content
       }
       addArticle(params).then(res => {
@@ -86,3 +108,31 @@ export default {
   }
 }
 </script>
+<style scoped lang="less">
+.addBlog{
+    .avatar-uploader .el-upload {
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+      border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      width: 120px;
+      height: 120px;
+      line-height: 120px;
+      text-align: center;
+      border: 1px solid #dcdfe6;
+    }
+    .avatar {
+      width: 120px;
+      height: 120px;
+      display: block;
+    }
+}
+</style>
