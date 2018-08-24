@@ -137,6 +137,11 @@ export const editArticle = params => {
     return getAxios('post', '/editArticle', params).then(res => res.data)
 }
 
+// 删除博客
+export const deleteArticle = params => {
+    return getAxios('post', '/deleteArticle', params).then(res => res.data)
+}
+
 // 博客列表
 export const searchAll = params => {
     return getAxios('get', '/searchAll', params).then(res => res.data)

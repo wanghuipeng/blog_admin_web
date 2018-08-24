@@ -50,6 +50,7 @@
           label="操作">
           <template slot-scope="scope">
             <el-button type="text" @click="editBlog(scope.row.id)" size="mini">编辑</el-button>
+            <el-button type="text" @click="delBlog(scope.row.id)" size="mini" class="red">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -74,7 +75,7 @@
 </template>
 
 <script>
-import { searchAll } from '@/assets/js/api.js'
+import { searchAll, deleteArticle } from '@/assets/js/api.js'
 
 export default {
   data () {
@@ -138,6 +139,35 @@ export default {
     editBlog (id) {
       this.$router.push({path: '/blogManage/editBlog', query: {blogId: id}})
     },
+    delBlog (id) {
+      this.$confirm('此操作将永久删除该博客, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let params = {
+          id
+        }
+        deleteArticle(params).then(res => {
+          if (res.status === 1) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.searchAll()
+          } else {
+            this.$notify({title: res.msg, type: 'error', duration: 1000})
+          }
+        }).catch(res => {
+          this.$notify({title: '服务器异常', type: 'error', duration: 1000})
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
     handleSizeChange (val) {
       this.pageNum = val
       this.loading = true
@@ -154,6 +184,9 @@ export default {
 
 <style scoped lang='less'>
 .order-table{
+  .red{
+   color: red
+  }
   .thumbnail{
     width: auto;
     height: 60px;
