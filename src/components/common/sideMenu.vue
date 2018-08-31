@@ -65,8 +65,8 @@ export default {
           obj.text = '博客管理'
           obj.icon = 'el-icon-document'
           break
-        case 'allotLog':
-          obj.text = 'menu4'
+        case 'remarkManage':
+          obj.text = '评论管理'
           obj.icon = 'el-icon-setting'
           break
         case 'statement':

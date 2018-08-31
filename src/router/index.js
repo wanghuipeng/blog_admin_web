@@ -4,8 +4,7 @@ import home from '@/components/home'
 import login from '@/components/login'
 import register from '@/components/register'
 import notFound from '@/components/notFound'
-import allotLog from '@/components/data/allotLog'
-import statement from '@/components/data/statement'
+import remarkManage from '@/components/remarkManage/list'
 import firstBarList from '@/components/firstBar/firstBarList'
 import busiHallFront from '@/components/busiHallFront/busiHall'
 import orderListFront from '@/components/orderListFront/orderList'
@@ -61,17 +60,11 @@ export default new Router({
                     component: editBlog,
                     name: editBlog
                 },
-                // page4
+                // 评论管理
                 {
-                    path: '/allotLog',
-                    component: allotLog,
-                    name: 'allotLog'
-                },
-                // page5
-                {
-                    path: '/statement',
-                    component: statement,
-                    name: 'statement'
+                    path: '/remarkManage',
+                    component: remarkManage,
+                    name: 'remarkManage'
                 },
                 // page6
                 {
