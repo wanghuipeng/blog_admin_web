@@ -29,7 +29,7 @@
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="delRemark(scope.row.remarkId)" size="mini" class="red">删除</el-button>
+            <el-button type="text" @click="delRemark(scope.row.remarkId,scope.row.blogId)" size="mini" class="red">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -72,14 +72,15 @@ export default {
     this.searchRemark()
   },
   methods: {
-    delRemark (remarkId) {
+    delRemark (remarkId, blogId) {
       this.$confirm('此操作将永久删除该评论, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         let params = {
-          remarkId
+          remarkId,
+          blogId
         }
         deleteRemark(params).then(res => {
           if (res.status === 1) {
