@@ -51,6 +51,14 @@
           label="评论数">
         </el-table-column>
         <el-table-column
+          prop="praiseNum"
+          label="点赞数">
+        </el-table-column>
+        <el-table-column
+          prop="collectNum"
+          label="收藏数">
+        </el-table-column>
+        <el-table-column
           label="操作">
           <template slot-scope="scope">
             <el-button type="text" @click="editBlog(scope.row.id)" size="mini">编辑</el-button>
