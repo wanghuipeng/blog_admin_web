@@ -5,13 +5,14 @@ import login from '@/components/login'
 import register from '@/components/register'
 import notFound from '@/components/notFound'
 import remarkManage from '@/components/remarkManage/list'
-import firstBarList from '@/components/firstBar/firstBarList'
 import busiHallFront from '@/components/busiHallFront/busiHall'
 import orderListFront from '@/components/orderListFront/orderList'
 import userManage from '@/components/userManage/userManage'
 import blogManage from '@/components/blogManage/list'
 import addBlog from '@/components/blogManage/addBlog'
 import editBlog from '@/components/blogManage/editBlog'
+import praiseManage from '@/components/praiseManage'
+import collectManage from '@/components/collectManage/list'
 
 Vue.use(Router)
 
@@ -66,17 +67,17 @@ export default new Router({
                     component: remarkManage,
                     name: 'remarkManage'
                 },
-                // page6
+                // 点赞管理
                 {
-                    path: '/firstBarList',
-                    component: firstBarList,
-                    name: 'firstBarList'
+                    path: '/praiseManage',
+                    component: praiseManage,
+                    name: 'praiseManage'
                 },
-                // page7
+                // 收藏管理
                 {
-                    path: '/busiHallFront',
-                    component: busiHallFront,
-                    name: 'busiHallFront'
+                    path: '/collectManage',
+                    component: collectManage,
+                    name: 'collectManage'
                 },
                 // page7
                 {

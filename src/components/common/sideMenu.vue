@@ -69,12 +69,12 @@ export default {
           obj.text = '评论管理'
           obj.icon = 'el-icon-setting'
           break
-        case 'statement':
-          obj.text = 'menu5'
+        case 'praiseManage':
+          obj.text = '点赞管理'
           obj.icon = 'el-icon-tickets'
           break
-        case 'firstBarList':
-          obj.text = 'menu6'
+        case 'collectManage':
+          obj.text = '收藏管理'
           obj.icon = 'el-icon-location'
           break
         case 'busiHallFront':

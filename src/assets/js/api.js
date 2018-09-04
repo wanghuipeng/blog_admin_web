@@ -161,3 +161,13 @@ export const searchRemark = params => {
 export const deleteRemark = params => {
     return getAxios('post', '/deleteRemark', params).then(res => res.data)
 }
+
+// 点赞文章列表
+export const searchPraiseBlog = params => {
+    return getAxios('get', '/searchPraiseBlog', params).then(res => res.data)
+}
+
+// 点赞评论列表
+export const searchPraiseRemark = params => {
+    return getAxios('get', '/searchPraiseRemark', params).then(res => res.data)
+}

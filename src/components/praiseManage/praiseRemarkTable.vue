@@ -7,35 +7,23 @@
         v-loading="loading"
         style="width: 100%;">
         <el-table-column
-          prop="blogId"
-          label="博客ID"
-         >
+          label="评论ID"
+          prop="remarkId">
         </el-table-column>
         <el-table-column
-          prop="remarkId"
-          label="点评ID"
-         >
+          prop="praiseRemarkId"
+          label="点赞ID">
         </el-table-column>
         <el-table-column
-          prop="time"
-          label="评论时间">
+          prop="praiseRemarkTime"
+          label="点赞时间">
           <template slot-scope="scope">
-            {{scope.row.time | formatDate}}
+            {{scope.row.praiseRemarkTime | formatDate}}
           </template>
-        </el-table-column>
-        <el-table-column
-          prop="markContent"
-          label="评论内容">
         </el-table-column>
         <el-table-column
           prop="name"
-          label="评论者">
-        </el-table-column>
-        <el-table-column
-          label="操作">
-          <template slot-scope="scope">
-            <el-button type="text" @click="delRemark(scope.row.remarkId,scope.row.blogId)" size="mini" class="red">删除</el-button>
-          </template>
+          label="点赞者">
         </el-table-column>
       </el-table>
       <!-- 分页 -->
@@ -49,12 +37,11 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
-
     </div>
 </template>
 
 <script>
-import { searchRemark, deleteRemark } from '@/assets/js/api.js'
+import { searchPraiseRemark } from '@/assets/js/api.js'
 import { formatDate } from '@/assets/js/common.js'
 
 export default {
@@ -64,6 +51,7 @@ export default {
       return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
     }
   },
+  props: [ 'remarkTab' ],
   data () {
     return {
       loading: true,
@@ -73,49 +61,20 @@ export default {
       tableData: []
     }
   },
-  created () {
-    this.searchRemark()
-  },
   methods: {
-    delRemark (remarkId, blogId) {
-      this.$confirm('此操作将永久删除该评论, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        let params = {
-          remarkId,
-          blogId
-        }
-        deleteRemark(params).then(res => {
-          if (res.status === 1) {
-            this.$notify({title: res.msg, type: 'success', duration: 1000})
-            this.searchRemark()
-          } else {
-            this.$notify({title: res.msg, type: 'error', duration: 1000})
-          }
-        }).catch(res => {
-          this.$notify({title: '服务器异常', type: 'error', duration: 1000})
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      })
-    },
-    searchRemark () {
+    // 列表数据
+    searchPraiseRemark () {
       let { pageNum, page } = this
       let params = {
         pageNum,
         page
       }
-      searchRemark(params).then(res => {
+      searchPraiseRemark(params).then(res => {
         let data = res.data
         if (res.status === 1) {
           this.loading = false
           this.tableData = data.list
-          this.total = data.length
+          this.total = data.count
         } else {
           this.$notify({title: res.msg, type: 'error', duration: 1000})
         }
@@ -126,12 +85,21 @@ export default {
     handleSizeChange (val) {
       this.pageNum = val
       this.loading = true
-      this.searchRemark()
+      this.searchPraiseRemark()
     },
     handleCurrentChange (val) {
       this.page = val
       this.loading = true
-      this.searchRemark()
+      this.searchPraiseRemark()
+    }
+  },
+  watch: {
+    remarkTab: function (e) {
+      if (e === '1') {
+        this.searchPraiseRemark()
+      } else {
+        return false
+      }
     }
   }
 }

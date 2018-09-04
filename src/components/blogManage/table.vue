@@ -7,14 +7,13 @@
         v-loading="loading"
         style="width: 100%;">
         <el-table-column
-          type="index"
-          label="ID"
-          width="50">
+          label="博客ID"
+          prop="id">
         </el-table-column>
         <el-table-column
           prop="type"
           label="博客类型"
-          width="180">
+         >
           <template slot-scope="scope">
             <span v-for="(item,index) in types" :key="index" v-if="scope.row.type === item.value">{{item.label}}</span>
           </template>
