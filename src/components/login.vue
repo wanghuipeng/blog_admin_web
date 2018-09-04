@@ -45,6 +45,7 @@ export default {
           sessionStorage.setItem('menu', JSON.stringify(menuAll))
           sessionStorage.setItem('token', data.token)
           sessionStorage.setItem('userName', this.ruleForm.username)
+          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 0}))
           this.$router.push({name: menuAll[0]})
         } else {
           this.$notify({title: data.msg, type: 'error', duration: 1000})

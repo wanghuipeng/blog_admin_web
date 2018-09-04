@@ -92,12 +92,11 @@ export default {
     })
     this.menus = menuObj
     this.index1 = JSON.parse(sessionStorage.getItem('menuIndex'))['menuIndex1'] + '' // 获取激活的一级菜单项
-    this.index2 = JSON.parse(sessionStorage.getItem('menuIndex'))['menuIndex2'] // 获取激活的二级菜单项
   },
   methods: {
     toLink (name, key1, key2) {
       this.$router.push({name: name})
-      sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: key1, menuIndex2: key2})) // 存储激活的菜单项
+      sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: key1})) // 存储激活的菜单项
     }
   }
 }

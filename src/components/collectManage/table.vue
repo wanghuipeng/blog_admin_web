@@ -12,30 +12,20 @@
          >
         </el-table-column>
         <el-table-column
-          prop="remarkId"
-          label="点评ID"
+          prop="collectId"
+          label="收藏ID"
          >
         </el-table-column>
         <el-table-column
           prop="time"
-          label="评论时间">
+          label="收藏时间">
           <template slot-scope="scope">
-            {{scope.row.time | formatDate}}
+            {{scope.row.collectTime | formatDate}}
           </template>
-        </el-table-column>
-        <el-table-column
-          prop="markContent"
-          label="评论内容">
         </el-table-column>
         <el-table-column
           prop="name"
-          label="评论者">
-        </el-table-column>
-        <el-table-column
-          label="操作">
-          <template slot-scope="scope">
-            <el-button type="text" @click="delRemark(scope.row.remarkId,scope.row.blogId)" size="mini" class="red">删除</el-button>
-          </template>
+          label="收藏者">
         </el-table-column>
       </el-table>
       <!-- 分页 -->
@@ -54,7 +44,7 @@
 </template>
 
 <script>
-import { searchRemark, deleteRemark } from '@/assets/js/api.js'
+import { searchCollectBlog } from '@/assets/js/api.js'
 import { formatDate } from '@/assets/js/common.js'
 
 export default {
@@ -74,43 +64,16 @@ export default {
     }
   },
   created () {
-    this.searchRemark()
+    this.searchCollectBlog()
   },
   methods: {
-    delRemark (remarkId, blogId) {
-      this.$confirm('此操作将永久删除该评论, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        let params = {
-          remarkId,
-          blogId
-        }
-        deleteRemark(params).then(res => {
-          if (res.status === 1) {
-            this.$notify({title: res.msg, type: 'success', duration: 1000})
-            this.searchRemark()
-          } else {
-            this.$notify({title: res.msg, type: 'error', duration: 1000})
-          }
-        }).catch(res => {
-          this.$notify({title: '服务器异常', type: 'error', duration: 1000})
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      })
-    },
-    searchRemark () {
+    searchCollectBlog () {
       let { pageNum, page } = this
       let params = {
         pageNum,
         page
       }
-      searchRemark(params).then(res => {
+      searchCollectBlog(params).then(res => {
         let data = res.data
         if (res.status === 1) {
           this.loading = false
@@ -126,12 +89,12 @@ export default {
     handleSizeChange (val) {
       this.pageNum = val
       this.loading = true
-      this.searchRemark()
+      this.searchCollectBlog()
     },
     handleCurrentChange (val) {
       this.page = val
       this.loading = true
-      this.searchRemark()
+      this.searchCollectBlog()
     }
   }
 }

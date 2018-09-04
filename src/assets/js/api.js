@@ -171,3 +171,8 @@ export const searchPraiseBlog = params => {
 export const searchPraiseRemark = params => {
     return getAxios('get', '/searchPraiseRemark', params).then(res => res.data)
 }
+
+// 收藏文章列表
+export const searchCollectBlog = params => {
+    return getAxios('get', '/searchCollectBlog', params).then(res => res.data)
+}

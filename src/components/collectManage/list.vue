@@ -1,14 +1,14 @@
 <template>
     <div class="main orderManage">
-        <blog-table />
+        <collect-table />
      </div>
 </template>
 
 <script>
-import blogTable from '@/components/remarkManage/table'
+import collectTable from '@/components/collectManage/table'
 
 export default {
-  components: { blogTable },
+  components: { collectTable },
   data () {
     return {
     }
