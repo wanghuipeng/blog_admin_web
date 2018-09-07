@@ -176,3 +176,13 @@ export const searchPraiseRemark = params => {
 export const searchCollectBlog = params => {
     return getAxios('get', '/searchCollectBlog', params).then(res => res.data)
 }
+
+// 后台账户列表
+export const searchAccountAdmin = params => {
+    return getAxios('get', '/searchAccountAdmin', params).then(res => res.data)
+}
+
+// 客户端账户列表
+export const searchAccountClient = params => {
+    return getAxios('get', '/searchAccountClient', params).then(res => res.data)
+}

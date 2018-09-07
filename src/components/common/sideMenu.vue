@@ -77,8 +77,8 @@ export default {
           obj.text = '收藏管理'
           obj.icon = 'el-icon-location'
           break
-        case 'busiHallFront':
-          obj.text = 'menu7'
+        case 'accountManage':
+          obj.text = '账户管理'
           obj.icon = 'el-icon-setting'
           break
         case 'orderListFront':

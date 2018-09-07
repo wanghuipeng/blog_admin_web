@@ -5,7 +5,6 @@ import login from '@/components/login'
 import register from '@/components/register'
 import notFound from '@/components/notFound'
 import remarkManage from '@/components/remarkManage/list'
-import busiHallFront from '@/components/busiHallFront/busiHall'
 import orderListFront from '@/components/orderListFront/orderList'
 import userManage from '@/components/userManage/userManage'
 import blogManage from '@/components/blogManage/list'
@@ -13,6 +12,7 @@ import addBlog from '@/components/blogManage/addBlog'
 import editBlog from '@/components/blogManage/editBlog'
 import praiseManage from '@/components/praiseManage'
 import collectManage from '@/components/collectManage/list'
+import accountManage from '@/components/accountManage'
 
 Vue.use(Router)
 
@@ -78,6 +78,12 @@ export default new Router({
                     path: '/collectManage',
                     component: collectManage,
                     name: 'collectManage'
+                },
+                // 账户管理
+                {
+                    path: '/accountManage',
+                    component: accountManage,
+                    name: 'accountManage'
                 },
                 // page7
                 {
