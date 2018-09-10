@@ -11,7 +11,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
     // let baseURL = "http://192.168.1.124:1030";
 axios.interceptors.request.use(function(request) {
     // 判断本地是否有token值，有则从新设置token，没有使用token默认配置
-    let moveToken = sessionStorage.getItem('token')
+    let moveToken = localStorage.getItem('token')
     if (moveToken) {
         request.headers.Authorization = `${moveToken}`
     };
@@ -185,4 +185,24 @@ export const searchAccountAdmin = params => {
 // 客户端账户列表
 export const searchAccountClient = params => {
     return getAxios('get', '/searchAccountClient', params).then(res => res.data)
+}
+
+// 获取用户信息
+export const searchUserInfo = params => {
+    return getAxios('get', '/searchUserInfo', params).then(res => res.data)
+}
+
+// 冻结admin账户
+export const freezeUser = params => {
+    return getAxios('get', '/freezeUser', params).then(res => res.data)
+}
+
+// 释放admin账户
+export const releaseUser = params => {
+    return getAxios('get', '/releaseUser', params).then(res => res.data)
+}
+
+// 删除admin账户
+export const delUser = params => {
+    return getAxios('get', '/delUser', params).then(res => res.data)
 }

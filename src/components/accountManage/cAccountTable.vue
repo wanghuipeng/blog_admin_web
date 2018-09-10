@@ -71,9 +71,6 @@ export default {
       tableData: []
     }
   },
-  created () {
-    this.searchAccountClient()
-  },
   methods: {
     // 列表数据
     searchAccountClient () {
@@ -108,7 +105,7 @@ export default {
   },
   watch: {
     blogTab: function (e) {
-      if (e === '0') {
+      if (e === '1') {
         this.searchAccountClient()
       } else {
         return false

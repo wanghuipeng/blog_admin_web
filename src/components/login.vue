@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { login } from '@/assets/js/api.js'
+import { login, userInfo } from '@/assets/js/api.js'
 
 export default {
   data () {
@@ -40,17 +40,35 @@ export default {
       login(params).then(res => {
         let data = res.data
         if (data.status === 1) {
-          this.$notify({title: '登录成功', type: 'success', duration: 1000})
-          let menuAll = ['userManage', 'blogManage', 'remarkManage', 'praiseManage', 'collectManage', 'accountManage', 'orderListFront']
-          sessionStorage.setItem('menu', JSON.stringify(menuAll))
-          sessionStorage.setItem('token', data.token)
-          sessionStorage.setItem('userName', this.ruleForm.username)
-          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 0}))
-          this.$router.push({name: menuAll[0]})
+          localStorage.setItem('token', data.token)
+          this.userInfo()
         } else {
           this.$notify({title: data.msg, type: 'error', duration: 1000})
         }
       }).catch(data => {
+        this.$notify({title: '服务器异常', type: 'error', duration: 1000})
+      })
+    },
+    // 用户详情
+    userInfo () {
+      userInfo().then(res => {
+        let data = res.data
+        if (res.status === 1) {
+          localStorage.setItem('user', data.user)
+          localStorage.setItem('avatar', data.avatar)
+          if (data.freeze) {
+            this.$notify({title: '很抱歉，您的账户已被冻结，请联系超级管理员！', type: 'error', duration: 3000})
+          } else {
+            this.$notify({title: '登录成功', type: 'success', duration: 1000})
+            let menuAll = ['blogManage', 'remarkManage', 'praiseManage', 'collectManage', 'accountManage', 'orderListFront']
+            localStorage.setItem('menu', JSON.stringify(menuAll))
+            localStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 0}))
+            this.$router.push({name: menuAll[0]})
+          }
+        } else {
+          this.$notify({title: res.msg, type: 'error', duration: 1000})
+        }
+      }).catch(res => {
         this.$notify({title: '服务器异常', type: 'error', duration: 1000})
       })
     },

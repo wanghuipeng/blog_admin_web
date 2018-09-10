@@ -1,7 +1,7 @@
 <template>
   <el-header>blog后台管理系统
       <ul class="right-bar">
-        <li class="userName"><img class="avatar" :src="avatar" /></li>
+        <li class="userName"><img class="avatar" :src="avatar" :title="userName" /></li>
         <li>
           <el-tooltip class="item" effect="dark" content="退出登录" placement="bottom">
             <i class="fa fa-power-off"  @click="quit"></i>
@@ -24,34 +24,20 @@
 </template>
 
 <script>
-import { userInfo } from '@/assets/js/api.js'
 
 export default {
   data () {
     return {
       quitDialogVisible: false,
-      avatar: ''
+      avatar: '',
+      userName: ''
     }
   },
   created () {
-    this.userInfo()
+    this.userName = localStorage.getItem('user')
+    this.avatar = localStorage.getItem('avatar')
   },
   methods: {
-    // 用户详情
-    userInfo () {
-      userInfo().then(res => {
-        let data = res.data
-        if (res.status === 1) {
-          sessionStorage.setItem('user', data.user)
-          sessionStorage.setItem('avatar', data.avatar)
-          this.avatar = data.avatar
-        } else {
-          this.$notify({title: res.msg, type: 'error', duration: 1000})
-        }
-      }).catch(res => {
-        this.$notify({title: '服务器异常', type: 'error', duration: 1000})
-      })
-    },
     // 退出
     quit () {
       this.quitDialogVisible = true
@@ -62,9 +48,9 @@ export default {
     },
     sureBtn () {
       this.quitDialogVisible = false
-      let moveToken = sessionStorage.getItem('token')
+      let moveToken = localStorage.getItem('token')
       if (moveToken) {
-        sessionStorage.clear()
+        localStorage.clear()
       }
       this.$router.push({name: 'login'})
       window.location.reload()

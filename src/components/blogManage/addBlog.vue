@@ -67,8 +67,8 @@ export default {
     }
   },
   created () {
-    let user = sessionStorage.getItem('user')
-    let avatar = sessionStorage.getItem('avatar')
+    let user = localStorage.getItem('user')
+    let avatar = localStorage.getItem('avatar')
     this.author = user
     this.avatar = avatar
   },

@@ -49,7 +49,7 @@ export default {
     }
   },
   mounted () {
-    let menu = JSON.parse(sessionStorage.getItem('menu')) || []
+    let menu = JSON.parse(localStorage.getItem('menu')) || []
     let menuObj = menu.map(function (item, index) {
       let obj = {
         icon: '',
@@ -57,10 +57,6 @@ export default {
         text: index
       }
       switch (item) {
-        case 'userManage':
-          obj.text = '用户管理'
-          obj.icon = 'el-icon-news'
-          break
         case 'blogManage':
           obj.text = '博客管理'
           obj.icon = 'el-icon-document'
@@ -91,12 +87,12 @@ export default {
       return obj
     })
     this.menus = menuObj
-    this.index1 = JSON.parse(sessionStorage.getItem('menuIndex'))['menuIndex1'] + '' // 获取激活的一级菜单项
+    this.index1 = JSON.parse(localStorage.getItem('menuIndex'))['menuIndex1'] + '' // 获取激活的一级菜单项
   },
   methods: {
     toLink (name, key1, key2) {
       this.$router.push({name: name})
-      sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: key1})) // 存储激活的菜单项
+      localStorage.setItem('menuIndex', JSON.stringify({menuIndex1: key1})) // 存储激活的菜单项
     }
   }
 }

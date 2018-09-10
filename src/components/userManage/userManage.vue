@@ -29,7 +29,7 @@
 </div>
 </template>
 <script>
-import { updatePassword } from '@/assets/js/api.js'
+import { updatePassword, searchUserInfo } from '@/assets/js/api.js'
 
 export default {
   data () {
@@ -41,14 +41,33 @@ export default {
         oldPassword: '',
         password: '',
         avatar: ''
-      }
+      },
+      userId: ''
     }
   },
-  mounted () {
-    this.ruleForm.user = sessionStorage.getItem('userName')
-    console.log(this.ruleForm.user)
+  created () {
+    this.userId = this.$route.query.userId
+    this.searchUserInfo()
   },
   methods: {
+    // 获取用户信息
+    searchUserInfo () {
+      let { userId } = this
+      let params = {
+        userId
+      }
+      searchUserInfo(params).then(res => {
+        let data = res.data
+        if (res.status === 1) {
+          this.imageUrl = data.avatar
+          this.ruleForm.user = data.user
+        } else {
+          this.$notify({title: res.msg, type: 'error', duration: 1000})
+        }
+      }).catch(data => {
+        this.$notify({title: '服务器异常', type: 'error', duration: 1000})
+      })
+    },
     // 上传成功
     handleAvatarSuccess (res, file) {
       this.ruleForm.avatar = res.data.filePath
@@ -66,7 +85,6 @@ export default {
         password,
         avatar
       }
-      console.log(this.ruleForm.password)
       updatePassword(params).then(res => {
         let data = res.data
         if (data.status === 1) {

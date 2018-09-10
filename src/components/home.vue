@@ -37,25 +37,25 @@ export default {
     $route (to, from) {
       switch (to.path) {
         case '/busiList':
-          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 0}))
+          localStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 0}))
           break
         case '/orderList':
-          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 1}))
+          localStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 1}))
           break
         case '/allotLog':
-          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 2}))
+          localStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 2}))
           break
         case '/statement':
-          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 3}))
+          localStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 3}))
           break
         case '/firstBarList':
-          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 4}))
+          localStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 4}))
           break
         case '/busiHallFront':
-          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 5}))
+          localStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 5}))
           break
         case '/orderListFront':
-          sessionStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 6}))
+          localStorage.setItem('menuIndex', JSON.stringify({menuIndex1: 6}))
           break
         default:
           return false

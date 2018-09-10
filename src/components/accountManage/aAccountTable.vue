@@ -25,6 +25,13 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="freeze"
+          label="是否冻结">
+          <template slot-scope="scope">
+            {{scope.row.freeze === 1 ? '已冻结' : '未冻结'}}
+          </template>
+        </el-table-column>
+        <el-table-column
           label="操作">
           <template slot-scope="scope">
             <el-dropdown>
@@ -32,9 +39,10 @@
                 管理<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click="edit">修改</el-dropdown-item>
-                <el-dropdown-item @click="freeze">冻结</el-dropdown-item>
-                <el-dropdown-item @click="del">删除</el-dropdown-item>
+                <el-dropdown-item @click.native="edit(scope.row.userId)">修改</el-dropdown-item>
+                <el-dropdown-item @click.native="freeze(scope.row.userId)" :disabled="scope.row.token === token">冻结</el-dropdown-item>
+                <el-dropdown-item @click.native="release(scope.row.userId)" :disabled="scope.row.token === token">释放</el-dropdown-item>
+                <el-dropdown-item @click.native="del(scope.row.userId)" :disabled="scope.row.token === token">删除</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -55,7 +63,7 @@
 </template>
 
 <script>
-import { searchAccountAdmin } from '@/assets/js/api.js'
+import { searchAccountAdmin, freezeUser, releaseUser, delUser } from '@/assets/js/api.js'
 import { formatDate } from '@/assets/js/common.js'
 
 export default {
@@ -72,15 +80,76 @@ export default {
       pageNum: 10,
       page: 1,
       total: 0,
-      tableData: []
+      tableData: [],
+      token: ''
     }
   },
+  created () {
+    this.searchAccountAdmin()
+    this.token = localStorage.getItem('token')
+  },
   methods: {
-    edit () {
-      this.$router.push({name: 'userManage'})
+    edit (userId) {
+      this.$router.push({name: 'userManage', query: { userId }})
+    },
+    freeze (userId) {
+      let params = {
+        userId
+      }
+      freezeUser(params).then(res => {
+        if (res.status === 1) {
+          this.searchAccountAdmin()
+          this.$notify({title: res.msg, type: 'success', duration: 1000})
+        } else {
+          this.$notify({title: res.msg, type: 'error', duration: 1000})
+        }
+      }).catch(res => {
+        this.$notify({title: '服务器异常', type: 'error', duration: 1000})
+      })
+    },
+    release (userId) {
+      let params = {
+        userId
+      }
+      releaseUser(params).then(res => {
+        if (res.status === 1) {
+          this.searchAccountAdmin()
+          this.$notify({title: res.msg, type: 'success', duration: 1000})
+        } else {
+          this.$notify({title: res.msg, type: 'error', duration: 1000})
+        }
+      }).catch(res => {
+        this.$notify({title: '服务器异常', type: 'error', duration: 1000})
+      })
+    },
+    del (userId) {
+      this.$confirm('此操作将永久删除该账户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let params = {
+          userId
+        }
+        delUser(params).then(res => {
+          if (res.status === 1) {
+            this.$notify({title: res.msg, type: 'success', duration: 1000})
+            this.searchAccountAdmin()
+          } else {
+            this.$notify({title: res.msg, type: 'error', duration: 1000})
+          }
+        }).catch(res => {
+          this.$notify({title: '服务器异常', type: 'error', duration: 1000})
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     // 列表数据
-    searchPraiseRemark () {
+    searchAccountAdmin () {
       let { pageNum, page } = this
       let params = {
         pageNum,
@@ -102,18 +171,20 @@ export default {
     handleSizeChange (val) {
       this.pageNum = val
       this.loading = true
-      this.searchPraiseRemark()
+
+      this.searchAccountAdmin()
     },
     handleCurrentChange (val) {
       this.page = val
       this.loading = true
-      this.searchPraiseRemark()
+
+      this.searchAccountAdmin()
     }
   },
   watch: {
     remarkTab: function (e) {
       if (e === '1') {
-        this.searchPraiseRemark()
+        this.searchAccountAdmin()
       } else {
         return false
       }

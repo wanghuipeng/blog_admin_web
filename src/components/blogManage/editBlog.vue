@@ -66,7 +66,7 @@ export default {
     }
   },
   created () {
-    let user = sessionStorage.getItem('user')
+    let user = localStorage.getItem('user')
     this.author = user
     this.detailArticle()
   },
