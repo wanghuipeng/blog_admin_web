@@ -19,6 +19,11 @@ Vue.prototype.$ajax = axios;
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
+
+import VueSocketio from 'vue-socket.io';
+import socketio from 'socket.io-client';
+Vue.use(VueSocketio, socketio('http://127.0.0.1:3000')); //与服务端链
+
 // 防止多次提交表单
 Vue.directive('dbClick', {
     inserted(el, binding) {
