@@ -26,7 +26,6 @@
 
 <script>
 import { userInfo } from '@/assets/js/api.js'
-import axios from 'axios'
 
 export default {
   data () {
@@ -42,7 +41,11 @@ export default {
     this.avatar = localStorage.getItem('avatar')
     let moveToken = localStorage.getItem('token')
     this.$socket.emit('sendPrivateMsg', moveToken)
-    this.userInfo()
+    this.$socket.on('onlinenums', data => {
+      this.notice = data.nums
+      console.log(this.notice)
+    })
+    // this.userInfo()
   },
   methods: {
     // 用户详情
